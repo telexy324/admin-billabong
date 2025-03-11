@@ -296,7 +296,7 @@ export default function Header() {
             </Link>
             <div className="ml-auto flex items-center gap-1">
                 <a
-                    href={"/"}
+                    href={import.meta.env.DEV ? "http://localhost:5173/" : "/"}
                     rel="noopener noreferrer"
                     className="flex items-center text-nowrap gap-1 text-sm font-medium opacity-50 transition-opacity hover:opacity-100"
                 >

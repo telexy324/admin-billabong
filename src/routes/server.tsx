@@ -10,6 +10,7 @@ import { ServerConfigCard } from "@/components/server-config"
 import { ServerConfigCardBatch } from "@/components/server-config-batch"
 import { TerminalButton } from "@/components/terminal"
 import { Checkbox } from "@/components/ui/checkbox"
+import { Button } from "@/components/ui/button"
 import {
     Table,
     TableBody,
@@ -22,7 +23,7 @@ import { IconButton } from "@/components/xui/icon-button"
 import { useServer } from "@/hooks/useServer"
 import { joinIP } from "@/lib/utils"
 import { ModelServerTaskResponse, ModelServer as Server } from "@/types"
-import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table"
+import { ColumnDef, flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from "@tanstack/react-table"
 import { useEffect, useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import { toast } from "sonner"
@@ -161,6 +162,12 @@ export default function ServerPage() {
         data: dataCache,
         columns,
         getCoreRowModel: getCoreRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
+        initialState: {
+            pagination: {
+                pageSize: 5, // 默认每页显示 5 行
+            },
+        },
     })
 
     const selectedRows = table.getSelectedRowModel().rows
@@ -217,7 +224,8 @@ export default function ServerPage() {
                         sid={selectedRows.map((r) => r.original.id)}
                         className="shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] bg-yellow-600 text-white hover:bg-yellow-500 dark:hover:bg-yellow-700 rounded-lg"
                     />
-                    <InstallCommandsMenu className="shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] bg-blue-700 text-white hover:bg-blue-600 dark:hover:bg-blue-800 rounded-lg" />
+                    <InstallCommandsMenu
+                        className="shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] bg-blue-700 text-white hover:bg-blue-600 dark:hover:bg-blue-800 rounded-lg" />
                 </HeaderButtonGroup>
             </div>
             <Table>
@@ -230,9 +238,9 @@ export default function ServerPage() {
                                         {header.isPlaceholder
                                             ? null
                                             : flexRender(
-                                                  header.column.columnDef.header,
-                                                  header.getContext(),
-                                              )}
+                                                header.column.columnDef.header,
+                                                header.getContext(),
+                                            )}
                                     </TableHead>
                                 )
                             })}
@@ -265,6 +273,24 @@ export default function ServerPage() {
                     )}
                 </TableBody>
             </Table>
+            <div className="flex items-center justify-end space-x-2 py-4">
+                <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => table.previousPage()}
+                    disabled={!table.getCanPreviousPage()}
+                >
+                    Previous
+                </Button>
+                <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => table.nextPage()}
+                    disabled={!table.getCanNextPage()}
+                >
+                    Next
+                </Button>
+            </div>
         </div>
     )
 }

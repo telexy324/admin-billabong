@@ -228,30 +228,30 @@ const FMComponent: React.FC<FMProps & JSX.IntrinsicElements["div"]> = ({ wsUrl, 
     useEffect(() => {
         worker.onmessage = async (event: MessageEvent<FMWorkerData>) => {
             switch (event.data.type) {
-                case FMWorkerOpcode.Error: {
-                    console.error("Error from worker", event.data.error)
-                    break
-                }
-                case FMWorkerOpcode.Progress: {
-                    handleReady.current = true
-                    break
-                }
-                case FMWorkerOpcode.Result: {
-                    handleReady.current = false
+            case FMWorkerOpcode.Error: {
+                console.error("Error from worker", event.data.error)
+                break
+            }
+            case FMWorkerOpcode.Progress: {
+                handleReady.current = true
+                break
+            }
+            case FMWorkerOpcode.Result: {
+                handleReady.current = false
 
-                    if (event.data.blob && event.data.fileName) {
-                        const url = URL.createObjectURL(event.data.blob)
-                        const anchor = document.createElement("a")
-                        anchor.href = url
-                        anchor.download = event.data.fileName
-                        anchor.click()
-                        URL.revokeObjectURL(url)
-                    }
-
-                    firstChunk.current = true
-                    if (dOpen) setdOpen(false)
-                    break
+                if (event.data.blob && event.data.fileName) {
+                    const url = URL.createObjectURL(event.data.blob)
+                    const anchor = document.createElement("a")
+                    anchor.href = url
+                    anchor.download = event.data.fileName
+                    anchor.click()
+                    URL.revokeObjectURL(url)
                 }
+
+                firstChunk.current = true
+                if (dOpen) setdOpen(false)
+                break
+            }
             }
         }
 

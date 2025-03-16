@@ -9,150 +9,168 @@
  * ---------------------------------------------------------------
  */
 
-export interface GithubComNezhahqNezhaModelCommonResponseAny {
+export interface GithubComTelexy324BillabongModelCommonResponseAny {
     data: any
     error: string
     success: boolean
 }
 
-export interface GithubComNezhahqNezhaModelCommonResponseArrayModelAlertRule {
+export interface GithubComTelexy324BillabongModelCommonResponseArrayModelAlertRule {
     data: ModelAlertRule[]
     error: string
     success: boolean
 }
 
-export interface GithubComNezhahqNezhaModelCommonResponseArrayModelCron {
+export interface GithubComTelexy324BillabongModelCommonResponseArrayModelCron {
     data: ModelCron[]
     error: string
     success: boolean
 }
 
-export interface GithubComNezhahqNezhaModelCommonResponseArrayModelDDNSProfile {
+export interface GithubComTelexy324BillabongModelCommonResponseArrayModelDDNSProfile {
     data: ModelDDNSProfile[]
     error: string
     success: boolean
 }
 
-export interface GithubComNezhahqNezhaModelCommonResponseArrayModelNAT {
+export interface GithubComTelexy324BillabongModelCommonResponseArrayModelNAT {
     data: ModelNAT[]
     error: string
     success: boolean
 }
 
-export interface GithubComNezhahqNezhaModelCommonResponseArrayModelNotification {
+export interface GithubComTelexy324BillabongModelCommonResponseArrayModelNotification {
     data: ModelNotification[]
     error: string
     success: boolean
 }
 
-export interface GithubComNezhahqNezhaModelCommonResponseArrayModelNotificationGroupResponseItem {
+export interface GithubComTelexy324BillabongModelCommonResponseArrayModelNotificationGroupResponseItem {
     data: ModelNotificationGroupResponseItem[]
     error: string
     success: boolean
 }
 
-export interface GithubComNezhahqNezhaModelCommonResponseArrayModelServer {
+export interface GithubComTelexy324BillabongModelCommonResponseArrayModelServer {
     data: ModelServer[]
     error: string
     success: boolean
 }
 
-export interface GithubComNezhahqNezhaModelCommonResponseArrayModelServerGroupResponseItem {
+export interface GithubComTelexy324BillabongModelCommonResponseArrayModelServerGroupResponseItem {
     data: ModelServerGroupResponseItem[]
     error: string
     success: boolean
 }
 
-export interface GithubComNezhahqNezhaModelCommonResponseArrayModelService {
+export interface GithubComTelexy324BillabongModelCommonResponseArrayModelService {
     data: ModelService[]
     error: string
     success: boolean
 }
 
-export interface GithubComNezhahqNezhaModelCommonResponseArrayModelServiceInfos {
+export interface GithubComTelexy324BillabongModelCommonResponseArrayModelServiceInfos {
     data: ModelServiceInfos[]
     error: string
     success: boolean
 }
 
-export interface GithubComNezhahqNezhaModelCommonResponseArrayModelUser {
+export interface GithubComTelexy324BillabongModelCommonResponseArrayModelTool {
+    data: ModelTool[]
+    error: string
+    success: boolean
+}
+
+export interface GithubComTelexy324BillabongModelCommonResponseArrayModelToolGroupResponseItem {
+    data: ModelToolGroupResponseItem[]
+    error: string
+    success: boolean
+}
+
+export interface GithubComTelexy324BillabongModelCommonResponseArrayModelUser {
     data: ModelUser[]
     error: string
     success: boolean
 }
 
-export interface GithubComNezhahqNezhaModelCommonResponseArrayString {
+export interface GithubComTelexy324BillabongModelCommonResponseArrayString {
     data: string[]
     error: string
     success: boolean
 }
 
-export interface GithubComNezhahqNezhaModelCommonResponseArrayUint64 {
+export interface GithubComTelexy324BillabongModelCommonResponseArrayUint64 {
     data: number[]
     error: string
     success: boolean
 }
 
-export interface GithubComNezhahqNezhaModelCommonResponseModelLoginResponse {
+export interface GithubComTelexy324BillabongModelCommonResponseModelLoginResponse {
     data: ModelLoginResponse
     error: string
     success: boolean
 }
 
-export interface GithubComNezhahqNezhaModelCommonResponseModelProfile {
+export interface GithubComTelexy324BillabongModelCommonResponseModelProfile {
     data: ModelProfile
     error: string
     success: boolean
 }
 
-export interface GithubComNezhahqNezhaModelCommonResponseModelServerTaskResponse {
+export interface GithubComTelexy324BillabongModelCommonResponseModelServerTaskResponse {
     data: ModelServerTaskResponse
     error: string
     success: boolean
 }
 
-export interface GithubComNezhahqNezhaModelCommonResponseModelServiceResponse {
+export interface GithubComTelexy324BillabongModelCommonResponseModelServiceResponse {
     data: ModelServiceResponse
     error: string
     success: boolean
 }
 
-export interface GithubComNezhahqNezhaModelCommonResponseModelSettingResponse {
+export interface GithubComTelexy324BillabongModelCommonResponseModelSettingResponse {
     data: ModelSettingResponse
     error: string
     success: boolean
 }
 
-export interface GithubComNezhahqNezhaModelCommonResponseString {
+export interface GithubComTelexy324BillabongModelCommonResponseModelTool {
+    data: ModelTool
+    error: string
+    success: boolean
+}
+
+export interface GithubComTelexy324BillabongModelCommonResponseString {
     data: string
     error: string
     success: boolean
 }
 
-export interface GithubComNezhahqNezhaModelCommonResponseUint64 {
+export interface GithubComTelexy324BillabongModelCommonResponseUint64 {
     data: number
     error: string
     success: boolean
 }
 
-export interface GithubComNezhahqNezhaModelPaginatedResponseArrayModelOnlineUserModelOnlineUser {
-    data: GithubComNezhahqNezhaModelValueArrayModelOnlineUser
+export interface GithubComTelexy324BillabongModelPaginatedResponseArrayModelOnlineUserModelOnlineUser {
+    data: GithubComTelexy324BillabongModelValueArrayModelOnlineUser
     error: string
     success: boolean
 }
 
-export interface GithubComNezhahqNezhaModelPaginatedResponseArrayModelWAFApiMockModelWAFApiMock {
-    data: GithubComNezhahqNezhaModelValueArrayModelWAFApiMock
+export interface GithubComTelexy324BillabongModelPaginatedResponseArrayModelWAFApiMockModelWAFApiMock {
+    data: GithubComTelexy324BillabongModelValueArrayModelWAFApiMock
     error: string
     success: boolean
 }
 
-export interface GithubComNezhahqNezhaModelValueArrayModelOnlineUser {
+export interface GithubComTelexy324BillabongModelValueArrayModelOnlineUser {
     pagination: ModelPagination
     value: ModelOnlineUser[]
 }
 
-export interface GithubComNezhahqNezhaModelValueArrayModelWAFApiMock {
+export interface GithubComTelexy324BillabongModelValueArrayModelWAFApiMock {
     pagination: ModelPagination
     value: ModelWAFApiMock[]
 }
@@ -631,32 +649,22 @@ export interface ModelServiceResponseItem {
 
 export interface ModelSetting {
     admin_template: string
-    agent_secret_key: string
-    avg_ping_count: number
     /** 覆盖范围（0:提醒未被 IgnoredIPNotification 包含的所有服务器; 1:仅提醒被 IgnoredIPNotification 包含的服务器;） */
     cover: number
     custom_code: string
     custom_code_dashboard: string
-    /** debug模式开关 */
-    debug: boolean
     dns_servers: string
     /** IP变更提醒 */
     enable_ip_change_notification: boolean
     /** 通知信息IP不打码 */
     enable_plain_ip_in_notification: boolean
-    /** 强制要求认证 */
-    force_auth: boolean
     /** 特定服务器IP（多个服务器用逗号分隔） */
     ignored_ip_notification: string
-    /** [ServerID] -> bool(值为true代表当前ServerID在特定服务器列表内） */
     ignored_ip_notification_server_ids: Record<string, boolean>
     install_host: string
     ip_change_notification_group_id: number
     /** 系统语言，默认 zh_CN */
     language: string
-    /** 时区，默认为 Asia/Shanghai */
-    location: string
-    /** oauth2 供应商列表，无需配置，自动生成 */
     oauth2_providers: string[]
     /** 真实IP */
     real_ip_header: string
@@ -715,6 +723,43 @@ export interface ModelStreamServerData {
 export interface ModelTerminalForm {
     protocol: string
     server_id: number
+}
+
+export interface ModelTool {
+    created_at: string
+    description: string
+    disabled: boolean
+    downloads: number
+    id: number
+    name: string
+    summary: string
+    updated_at: string
+}
+
+export interface ModelToolForm {
+    description: string
+    disabled?: boolean
+    /** @minLength 1 */
+    name: string
+    summary: string
+}
+
+export interface ModelToolGroup {
+    created_at: string
+    id: number
+    name: string
+    updated_at: string
+}
+
+export interface ModelToolGroupForm {
+    /** @minLength 1 */
+    name: string
+    tools: number[]
+}
+
+export interface ModelToolGroupResponseItem {
+    group: ModelToolGroup
+    tools: number[]
 }
 
 export interface ModelUser {

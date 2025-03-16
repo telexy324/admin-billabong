@@ -245,6 +245,15 @@ export default function Header() {
                                     <Link to="/dashboard/server-group">{t("Group")}</Link>
                                 </NzNavigationMenuLink>
                             </NavigationMenuItem>
+                            <NavigationMenuItem>
+                                <NzNavigationMenuLink
+                                    asChild
+                                    active={location.pathname === "/dashboard/tool"}
+                                    className={navigationMenuTriggerStyle()}
+                                >
+                                    <Link to="/dashboard/tool">工具</Link>
+                                </NzNavigationMenuLink>
+                            </NavigationMenuItem>
                         </>
                     )}
                 </div>

@@ -25,6 +25,7 @@ import ServicePage from "./routes/service"
 import SettingsPage from "./routes/settings"
 import UserPage from "./routes/user"
 import WAFPage from "./routes/waf"
+import ToolPage from "./routes/tool"
 
 const router = createBrowserRouter([
     {
@@ -137,6 +138,10 @@ const router = createBrowserRouter([
             {
                 path: "/dashboard/settings/online-user",
                 element: <OnlineUserPage />,
+            },
+            {
+                path: "/dashboard/tool",
+                element: <ToolPage />,
             },
         ],
     },

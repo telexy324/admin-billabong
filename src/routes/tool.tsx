@@ -89,9 +89,9 @@ export default function ToolPage() {
             accessorFn: (row) => row.downloads,
         },
         {
-            header: "禁用",
+            header: "启用",
             accessorKey: "disabled",
-            accessorFn: (row) => row.disabled,
+            accessorFn: (row) => row.enabled,
         },
         {
             id: "actions",
@@ -129,7 +129,7 @@ export default function ToolPage() {
     return (
         <div className="px-3">
             <div className="flex mt-6 mb-4">
-                <h1 className="flex-1 text-3xl font-bold tracking-tight">{t("DDNS")}</h1>
+                <h1 className="flex-1 text-3xl font-bold tracking-tight">工具列表</h1>
                 <HeaderButtonGroup
                     className="flex-2 flex ml-auto gap-2"
                     delete={{

@@ -3,7 +3,7 @@ import { ModelToolForm } from "@/types"
 import { FetcherMethod, fetcher } from "./api"
 
 export const createTool = async (data: ModelToolForm): Promise<number> => {
-    return fetcher<number>(FetcherMethod.POST, "/api/v1/ddns", data)
+    return fetcher<number>(FetcherMethod.POST, "/api/v1/tool", data)
 }
 
 export const updateTool = async (id: number, data: ModelToolForm): Promise<void> => {

@@ -728,8 +728,8 @@ export interface ModelTerminalForm {
 export interface ModelTool {
     created_at: string
     description: string
-    disabled: boolean
     downloads: number
+    enabled: boolean
     id: number
     name: string
     summary: string
@@ -738,7 +738,7 @@ export interface ModelTool {
 
 export interface ModelToolForm {
     description: string
-    disabled?: boolean
+    enabled?: boolean
     /** @minLength 1 */
     name: string
     summary: string

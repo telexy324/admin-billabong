@@ -32,6 +32,7 @@ import { KeyedMutator } from "swr"
 import { z } from "zod"
 
 import { createTool, updateTool } from "@/api/tool.ts"
+import { FileUploader } from "@/components/file-uploader.tsx"
 
 interface ToolCardProps {
     data?: ModelTool
@@ -42,8 +43,7 @@ const toolFormSchema = z.object({
     name: z.string().min(1),
     summary: z.string().min(1),
     description: z.string(),
-    domains_raw: z.string(),
-    disabled: z.boolean(),
+    enabled: z.boolean(),
 })
 
 export const ToolCard: React.FC<ToolCardProps> = ({ data, mutate }) => {
@@ -51,14 +51,11 @@ export const ToolCard: React.FC<ToolCardProps> = ({ data, mutate }) => {
     const form = useForm<z.infer<typeof toolFormSchema>>({
         resolver: zodResolver(toolFormSchema),
         defaultValues: data
-            ? {
-                ...data,
-            }
-            : {
+            ? data: {
                 name: "",
                 summary: "",
                 description: "",
-                disabled: false,
+                enabled: false,
             },
         resetOptions: {
             keepDefaultValues: false,
@@ -137,7 +134,7 @@ export const ToolCard: React.FC<ToolCardProps> = ({ data, mutate }) => {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name="disabled"
+                                    name="enabled"
                                     render={({ field }) => (
                                         <FormItem className="flex items-center space-x-2">
                                             <FormControl>
@@ -147,12 +144,37 @@ export const ToolCard: React.FC<ToolCardProps> = ({ data, mutate }) => {
                                                         onCheckedChange={field.onChange}
                                                     />
                                                     <Label className="text-sm">
-                                                        禁用
+                                                        启用
                                                     </Label>
                                                 </div>
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name='image'
+                                    render={({ field }) => (
+                                        <div className='space-y-6'>
+                                            <FormItem className='w-full'>
+                                                <FormLabel>Images</FormLabel>
+                                                <FormControl>
+                                                    <FileUploader
+                                                        value={field.value}
+                                                        onValueChange={field.onChange}
+                                                        maxFiles={4}
+                                                        maxSize={4 * 1024 * 1024}
+                                                        // disabled={loading}
+                                                        // progresses={progresses}
+                                                        // pass the onUpload function here for direct upload
+                                                        // onUpload={uploadFiles}
+                                                        // disabled={isUploading}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        </div>
                                     )}
                                 />
                                 <DialogFooter className="justify-end">

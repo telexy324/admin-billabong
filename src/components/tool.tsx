@@ -63,6 +63,7 @@ export const ToolCard: React.FC<ToolCardProps> = ({ data, mutate }) => {
     })
 
     const [open, setOpen] = useState(false)
+    const [items, setItems] = useState<string[]>([])
 
     const onSubmit = async (values: z.infer<typeof toolFormSchema>) => {
         try {
@@ -78,6 +79,21 @@ export const ToolCard: React.FC<ToolCardProps> = ({ data, mutate }) => {
         await mutate()
         form.reset()
     }
+
+    // const uploadFiles = async (files: File[]):Promise<string[]> => {
+    //     let urls = [];
+    //     for (const file of files) {
+    //         const formData = new FormData();
+    //         formData.append("file", file);
+    //         const res = await fetch("/api/v1/file", {
+    //             method: "POST",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //             body: formData
+    //         })
+    //     }
+    // }
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
@@ -170,6 +186,8 @@ export const ToolCard: React.FC<ToolCardProps> = ({ data, mutate }) => {
                                                         // pass the onUpload function here for direct upload
                                                         // onUpload={uploadFiles}
                                                         // disabled={isUploading}
+                                                        items={items}
+                                                        setItems={setItems}
                                                     />
                                                 </FormControl>
                                                 <FormMessage />

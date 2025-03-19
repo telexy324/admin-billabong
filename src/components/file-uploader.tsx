@@ -12,6 +12,7 @@ import { Progress } from '@/components/ui/progress';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useControllableState } from '@/hooks/use-controllable-state';
 import { cn, formatBytes } from '@/lib/utils';
+import { useTranslation } from "react-i18next"
 
 interface FileUploaderProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -36,7 +37,7 @@ interface FileUploaderProps extends React.HTMLAttributes<HTMLDivElement> {
    * @default undefined
    * @example onUpload={(files) => uploadFiles(files)}
    */
-  onUpload?: (files: File[]) => Promise<void>;
+  // onUpload?: (files: File[]) => Promise<void>;
 
   /**
    * Progress of the uploaded files.
@@ -88,19 +89,26 @@ interface FileUploaderProps extends React.HTMLAttributes<HTMLDivElement> {
    * @example disabled
    */
   disabled?: boolean;
+  items?: string[];
+  setItems?: React.Dispatch<React.SetStateAction<string[]>>;
+  url?: string;
 }
 
 export function FileUploader(props: FileUploaderProps) {
+    const { t } = useTranslation()
     const {
         value: valueProp,
         onValueChange,
-        onUpload,
+        // onUpload,
         progresses,
         accept = { 'image/*': [] },
         maxSize = 1024 * 1024 * 2,
         maxFiles = 1,
         multiple = false,
         disabled = false,
+        items,
+        setItems,
+        url = "/api/v1/file",
         className,
         ...dropzoneProps
     } = props;
@@ -109,6 +117,27 @@ export function FileUploader(props: FileUploaderProps) {
         prop: valueProp,
         onChange: onValueChange
     });
+
+    const onUpload = async (files: File[]) => {
+        for (const file of files) {
+            const formData = new FormData();
+            formData.append("file", file);
+            try {
+                const res = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: formData
+                })
+            } catch (e) {
+                console.error(e)
+                toast(t("Error"), {
+                    description: t("Results.UnExpectedError"),
+                })
+            }
+        }
+    }
 
     const onDrop = React.useCallback(
         (acceptedFiles: File[], rejectedFiles: FileRejection[]) => {

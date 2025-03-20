@@ -22,7 +22,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { IconButton } from "@/components/xui/icon-button"
-import { ModelTool } from "@/types"
+import { ModelTool, ModelUpload } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
@@ -63,7 +63,7 @@ export const ToolCard: React.FC<ToolCardProps> = ({ data, mutate }) => {
     })
 
     const [open, setOpen] = useState(false)
-    const [items, setItems] = useState<string[]>([])
+    const [items, setItems] = useState<ModelUpload[]>([])
 
     const onSubmit = async (values: z.infer<typeof toolFormSchema>) => {
         try {
@@ -171,14 +171,14 @@ export const ToolCard: React.FC<ToolCardProps> = ({ data, mutate }) => {
                                 <FormField
                                     control={form.control}
                                     name='image'
-                                    render={({ field }) => (
+                                    render={() => (
                                         <div className='space-y-6'>
                                             <FormItem className='w-full'>
                                                 <FormLabel>Images</FormLabel>
                                                 <FormControl>
                                                     <FileUploader
-                                                        value={field.value}
-                                                        onValueChange={field.onChange}
+                                                        // value={field.value}
+                                                        // onValueChange={field.onChange}
                                                         maxFiles={4}
                                                         maxSize={4 * 1024 * 1024}
                                                         // disabled={loading}

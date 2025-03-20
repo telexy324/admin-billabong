@@ -29,6 +29,13 @@ export async function fetcher<T>(method: FetcherMethod, path: string, data?: any
         response = await fetch(buildUrl(path, data), {
             method: "GET",
         })
+    } else if (method === FetcherMethod.POST && data && data instanceof File) {
+        const formData = new FormData();
+        formData.append("file", data);
+        response = await fetch(path, {
+            method: method,
+            body: formData,
+        })
     } else {
         response = await fetch(path, {
             method: method,

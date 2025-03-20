@@ -87,6 +87,12 @@ export interface GithubComTelexy324BillabongModelCommonResponseArrayModelToolGro
     success: boolean
 }
 
+export interface GithubComTelexy324BillabongModelCommonResponseArrayModelUpload {
+    data: ModelUpload[]
+    error: string
+    success: boolean
+}
+
 export interface GithubComTelexy324BillabongModelCommonResponseArrayModelUser {
     data: ModelUser[]
     error: string
@@ -760,6 +766,21 @@ export interface ModelToolGroupForm {
 export interface ModelToolGroupResponseItem {
     group: ModelToolGroup
     tools: number[]
+}
+
+export interface ModelUpload {
+    created_at: string
+    id: number
+    /** 编号 */
+    key: string
+    /** 文件名 */
+    name: string
+    size: number
+    /** 文件标签 */
+    tag: string
+    updated_at: string
+    /** 文件地址 */
+    url: string
 }
 
 export interface ModelUser {

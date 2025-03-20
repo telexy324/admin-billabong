@@ -10,9 +10,11 @@ import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { useControllableState } from '@/hooks/use-controllable-state';
+// import { useControllableState } from '@/hooks/use-controllable-state';
 import { cn, formatBytes } from '@/lib/utils';
 import { useTranslation } from "react-i18next"
+import { ModelUpload } from "@/types"
+import { upload } from "@/api/upload.ts"
 
 interface FileUploaderProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -21,7 +23,7 @@ interface FileUploaderProps extends React.HTMLAttributes<HTMLDivElement> {
    * @default undefined
    * @example value={files}
    */
-  value?: File[];
+  // value?: File[];
 
   /**
    * Function to be called when the value changes.
@@ -29,7 +31,7 @@ interface FileUploaderProps extends React.HTMLAttributes<HTMLDivElement> {
    * @default undefined
    * @example onValueChange={(files) => setFiles(files)}
    */
-  onValueChange?: React.Dispatch<React.SetStateAction<File[]>>;
+  // onValueChange?: React.Dispatch<React.SetStateAction<File[]>>;
 
   /**
    * Function to be called when files are uploaded.
@@ -89,16 +91,16 @@ interface FileUploaderProps extends React.HTMLAttributes<HTMLDivElement> {
    * @example disabled
    */
   disabled?: boolean;
-  items?: string[];
-  setItems?: React.Dispatch<React.SetStateAction<string[]>>;
+  items: ModelUpload[];
+  setItems: React.Dispatch<React.SetStateAction<ModelUpload[]>>;
   url?: string;
 }
 
 export function FileUploader(props: FileUploaderProps) {
     const { t } = useTranslation()
     const {
-        value: valueProp,
-        onValueChange,
+        // value: valueProp,
+        // onValueChange,
         // onUpload,
         progresses,
         accept = { 'image/*': [] },
@@ -108,28 +110,22 @@ export function FileUploader(props: FileUploaderProps) {
         disabled = false,
         items,
         setItems,
-        url = "/api/v1/file",
         className,
         ...dropzoneProps
     } = props;
 
-    const [files, setFiles] = useControllableState({
-        prop: valueProp,
-        onChange: onValueChange
-    });
+    // const [files, setFiles] = useControllableState({
+    //     prop: valueProp,
+    //     onChange: onValueChange
+    // });
 
     const onUpload = async (files: File[]) => {
         for (const file of files) {
             const formData = new FormData();
             formData.append("file", file);
             try {
-                const res = await fetch(url, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: formData
-                })
+                const newItem = await upload(file);
+                setItems([...items, newItem])
             } catch (e) {
                 console.error(e)
                 toast(t("Error"), {
@@ -146,20 +142,20 @@ export function FileUploader(props: FileUploaderProps) {
                 return;
             }
 
-            if ((files?.length ?? 0) + acceptedFiles.length > maxFiles) {
+            if ((items?.length ?? 0) + acceptedFiles.length > maxFiles) {
                 toast.error(`Cannot upload more than ${maxFiles} files`);
                 return;
             }
 
-            const newFiles = acceptedFiles.map((file) =>
-                Object.assign(file, {
-                    preview: URL.createObjectURL(file)
-                })
-            );
+            // const newFiles = acceptedFiles.map((file) =>
+            //     Object.assign(file, {
+            //         preview: URL.createObjectURL(file)
+            //     })
+            // );
 
-            const updatedFiles = files ? [...files, ...newFiles] : newFiles;
-
-            setFiles(updatedFiles);
+            // const updatedFiles = items ? [...items, ...newFiles] : newFiles;
+            //
+            // setItems(updatedFiles);
 
             if (rejectedFiles.length > 0) {
                 rejectedFiles.forEach(({ file }) => {
@@ -169,16 +165,16 @@ export function FileUploader(props: FileUploaderProps) {
 
             if (
                 onUpload &&
-          updatedFiles.length > 0 &&
-          updatedFiles.length <= maxFiles
+          acceptedFiles.length > 0 &&
+          acceptedFiles.length <= maxFiles
             ) {
                 const target =
-            updatedFiles.length > 0 ? `${updatedFiles.length} files` : `file`;
+            acceptedFiles.length > 0 ? `${acceptedFiles.length} files` : `file`;
 
-                toast.promise(onUpload(updatedFiles), {
+                toast.promise(onUpload(acceptedFiles), {
                     loading: `Uploading ${target}...`,
                     success: () => {
-                        setFiles([]);
+                        // setFiles([]);
                         return `${target} uploaded`;
                     },
                     error: `Failed to upload ${target}`
@@ -186,14 +182,15 @@ export function FileUploader(props: FileUploaderProps) {
             }
         },
 
-        [files, maxFiles, multiple, onUpload, setFiles]
+        // [files, maxFiles, multiple, onUpload, setFiles]
+        [maxFiles, multiple, onUpload]
     );
 
     function onRemove(index: number) {
-        if (!files) return;
-        const newFiles = files.filter((_, i) => i !== index);
-        setFiles(newFiles);
-        onValueChange?.(newFiles);
+        if (!items) return;
+        const newItems = items.filter((_, i) => i !== index);
+        setItems(newItems);
+        // onValueChange?.(newFiles);
     }
 
     // // Revoke preview url when component unmounts
@@ -209,7 +206,7 @@ export function FileUploader(props: FileUploaderProps) {
     //     // eslint-disable-next-line react-hooks/exhaustive-deps
     // }, []);
 
-    const isDisabled = disabled || (files?.length ?? 0) >= maxFiles;
+    const isDisabled = disabled || (items?.length ?? 0) >= maxFiles;
 
     return (
         <div className='relative flex flex-col gap-6 overflow-hidden'>
@@ -271,15 +268,15 @@ export function FileUploader(props: FileUploaderProps) {
                     </div>
                 )}
             </Dropzone>
-            {files?.length ? (
+            {items?.length ? (
                 <ScrollArea className='h-fit w-full px-3'>
                     <div className='max-h-48 space-y-4'>
-                        {files?.map((file, index) => (
+                        {items?.map((item, index) => (
                             <FileCard
                                 key={index}
-                                file={file}
+                                file={item}
                                 onRemove={() => onRemove(index)}
-                                progress={progresses?.[file.name]}
+                                progress={progresses?.[item.name]}
                             />
                         ))}
                     </div>
@@ -290,7 +287,7 @@ export function FileUploader(props: FileUploaderProps) {
 }
 
   interface FileCardProps {
-    file: File;
+    file: ModelUpload;
     onRemove: () => void;
     progress?: number;
   }

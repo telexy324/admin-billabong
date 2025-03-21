@@ -44,6 +44,7 @@ const toolFormSchema = z.object({
     summary: z.string().min(1),
     description: z.string(),
     enabled: z.boolean(),
+    files: z.optional(z.array(z.any())),
 })
 
 export const ToolCard: React.FC<ToolCardProps> = ({ data, mutate }) => {
@@ -56,6 +57,7 @@ export const ToolCard: React.FC<ToolCardProps> = ({ data, mutate }) => {
                 summary: "",
                 description: "",
                 enabled: false,
+                files: [],
             },
         resetOptions: {
             keepDefaultValues: false,
@@ -63,7 +65,11 @@ export const ToolCard: React.FC<ToolCardProps> = ({ data, mutate }) => {
     })
 
     const [open, setOpen] = useState(false)
-    const [items, setItems] = useState<ModelUpload[]>([])
+    const [items, setItems] = useState<ModelUpload[]>(data?data.files:[])
+
+    // useEffect(() => {
+    //     setItems(data?data.files:[]);
+    // }, [data?data.files:[]]);
 
     const onSubmit = async (values: z.infer<typeof toolFormSchema>) => {
         try {
@@ -171,7 +177,7 @@ export const ToolCard: React.FC<ToolCardProps> = ({ data, mutate }) => {
                                 <FormField
                                     control={form.control}
                                     name='image'
-                                    render={() => (
+                                    render={({ field }) => (
                                         <div className='space-y-6'>
                                             <FormItem className='w-full'>
                                                 <FormLabel>Images</FormLabel>

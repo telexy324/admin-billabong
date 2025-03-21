@@ -736,6 +736,7 @@ export interface ModelTool {
     description: string
     downloads: number
     enabled: boolean
+    files: ModelUpload[]
     id: number
     name: string
     summary: string

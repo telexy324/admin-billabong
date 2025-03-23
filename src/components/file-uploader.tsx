@@ -10,7 +10,7 @@ import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { ScrollArea } from '@/components/ui/scroll-area';
-// import { useControllableState } from '@/hooks/use-controllable-state';
+import { useControllableState } from '@/hooks/use-controllable-state';
 import { cn, formatBytes } from '@/lib/utils';
 import { useTranslation } from "react-i18next"
 import { ModelUpload } from "@/types"
@@ -24,6 +24,7 @@ interface FileUploaderProps extends React.HTMLAttributes<HTMLDivElement> {
    * @example value={files}
    */
   // value?: File[];
+  value?: ModelUpload[];
 
   /**
    * Function to be called when the value changes.
@@ -32,6 +33,7 @@ interface FileUploaderProps extends React.HTMLAttributes<HTMLDivElement> {
    * @example onValueChange={(files) => setFiles(files)}
    */
   // onValueChange?: React.Dispatch<React.SetStateAction<File[]>>;
+  onValueChange?: React.Dispatch<React.SetStateAction<ModelUpload[]>>;
 
   /**
    * Function to be called when files are uploaded.
@@ -91,16 +93,16 @@ interface FileUploaderProps extends React.HTMLAttributes<HTMLDivElement> {
    * @example disabled
    */
   disabled?: boolean;
-  items: ModelUpload[];
-  setItems: React.Dispatch<React.SetStateAction<ModelUpload[]>>;
-  url?: string;
+  // items: ModelUpload[];
+  // setItems: React.Dispatch<React.SetStateAction<ModelUpload[]>>;
+  // url?: string;
 }
 
 export function FileUploader(props: FileUploaderProps) {
     const { t } = useTranslation()
     const {
-        // value: valueProp,
-        // onValueChange,
+        value: valueProp,
+        onValueChange,
         // onUpload,
         progresses,
         accept = { 'image/*': [] },
@@ -108,24 +110,31 @@ export function FileUploader(props: FileUploaderProps) {
         maxFiles = 1,
         multiple = false,
         disabled = false,
-        items,
-        setItems,
+        // items,
+        // setItems,
         className,
         ...dropzoneProps
     } = props;
 
-    // const [files, setFiles] = useControllableState({
-    //     prop: valueProp,
-    //     onChange: onValueChange
-    // });
+    const [files, setFiles] = useControllableState({
+        prop: valueProp,
+        onChange: onValueChange
+    });
 
-    const onUpload = async (files: File[]) => {
-        for (const file of files) {
+    const onUpload = async (newFiles: File[]) => {
+        for (const file of newFiles) {
             const formData = new FormData();
             formData.append("file", file);
             try {
                 const newItem = await upload(file);
-                setItems([...items, newItem])
+                // const items = valueProp?[...valueProp, newItem]:[newItem]
+                // if (onValueChange) {
+                //     onValueChange(items)
+                // }
+                const updatedFiles = files ? [...files, newItem] : [newItem];
+
+                setFiles(updatedFiles);
+                onValueChange?.(updatedFiles);
             } catch (e) {
                 console.error(e)
                 toast(t("Error"), {
@@ -142,7 +151,7 @@ export function FileUploader(props: FileUploaderProps) {
                 return;
             }
 
-            if ((items?.length ?? 0) + acceptedFiles.length > maxFiles) {
+            if ((files?.length ?? 0) + acceptedFiles.length > maxFiles) {
                 toast.error(`Cannot upload more than ${maxFiles} files`);
                 return;
             }
@@ -186,11 +195,17 @@ export function FileUploader(props: FileUploaderProps) {
         [maxFiles, multiple, onUpload]
     );
 
+    // function onRemove(index: number) {
+    //     if (!valueProp) return;
+    //     const newItems = valueProp.filter((_, i) => i !== index);
+    //     onValueChange?.(newItems);
+    //     // onValueChange?.(newFiles);
+    // }
     function onRemove(index: number) {
-        if (!items) return;
-        const newItems = items.filter((_, i) => i !== index);
-        setItems(newItems);
-        // onValueChange?.(newFiles);
+        if (!files) return;
+        const newFiles = files.filter((_, i) => i !== index);
+        setFiles(newFiles);
+        onValueChange?.(newFiles);
     }
 
     // // Revoke preview url when component unmounts
@@ -206,7 +221,8 @@ export function FileUploader(props: FileUploaderProps) {
     //     // eslint-disable-next-line react-hooks/exhaustive-deps
     // }, []);
 
-    const isDisabled = disabled || (items?.length ?? 0) >= maxFiles;
+    // const isDisabled = disabled || (valueProp?.length ?? 0) >= maxFiles;
+    const isDisabled = disabled || (files?.length ?? 0) >= maxFiles;
 
     return (
         <div className='relative flex flex-col gap-6 overflow-hidden'>
@@ -268,10 +284,10 @@ export function FileUploader(props: FileUploaderProps) {
                     </div>
                 )}
             </Dropzone>
-            {items?.length ? (
+            {files?.length ? (
                 <ScrollArea className='h-fit w-full px-3'>
                     <div className='max-h-48 space-y-4'>
-                        {items?.map((item, index) => (
+                        {files?.map((item, index) => (
                             <FileCard
                                 key={index}
                                 file={item}

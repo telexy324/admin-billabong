@@ -22,7 +22,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { IconButton } from "@/components/xui/icon-button"
-import { ModelTool, ModelUpload } from "@/types"
+import { ModelTool } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
@@ -39,12 +39,23 @@ interface ToolCardProps {
     mutate: KeyedMutator<ModelTool[]>
 }
 
+const modelUploadSchema = z.object({
+    created_at: z.string(),
+    id: z.number(),
+    key: z.string(), // 编号
+    name: z.string(), // 文件名
+    size: z.number(),
+    tag: z.string(), // 文件标签
+    updated_at: z.string(),
+    url: z.string().url(), // 确保是 URL 格式
+})
+
 const toolFormSchema = z.object({
     name: z.string().min(1),
     summary: z.string().min(1),
     description: z.string(),
     enabled: z.boolean(),
-    files: z.optional(z.array(z.any())),
+    files: z.array(modelUploadSchema),
 })
 
 export const ToolCard: React.FC<ToolCardProps> = ({ data, mutate }) => {
@@ -65,13 +76,14 @@ export const ToolCard: React.FC<ToolCardProps> = ({ data, mutate }) => {
     })
 
     const [open, setOpen] = useState(false)
-    const [items, setItems] = useState<ModelUpload[]>(data?data.files:[])
+    // const [items, setItems] = useState<ModelUpload[]>(data?data.files:[])
 
     // useEffect(() => {
     //     setItems(data?data.files:[]);
     // }, [data?data.files:[]]);
 
     const onSubmit = async (values: z.infer<typeof toolFormSchema>) => {
+        console.log("提交的数据：", values);
         try {
             data?.id ? await updateTool(data.id, values) : await createTool(values)
         } catch (e) {
@@ -114,7 +126,9 @@ export const ToolCard: React.FC<ToolCardProps> = ({ data, mutate }) => {
                             <DialogDescription />
                         </DialogHeader>
                         <Form {...form}>
-                            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 my-2">
+                            <form onSubmit={(onSubmit) => {
+                                form.handleSubmit(onSubmit)
+                            }} className="space-y-2 my-2">
                                 <FormField
                                     control={form.control}
                                     name="name"
@@ -176,15 +190,20 @@ export const ToolCard: React.FC<ToolCardProps> = ({ data, mutate }) => {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name='image'
-                                    render={({ field }) => (
+                                    name='files'
+                                    render={({field}) => (
                                         <div className='space-y-6'>
                                             <FormItem className='w-full'>
-                                                <FormLabel>Images</FormLabel>
+                                                <FormLabel>Files</FormLabel>
                                                 <FormControl>
                                                     <FileUploader
-                                                        // value={field.value}
-                                                        // onValueChange={field.onChange}
+                                                        value={field.value}
+                                                        onValueChange={(files) => {
+                                                            console.log("上传的文件：", files) // ✅ 调试
+                                                            console.log("手动获取 values.files：", form.getValues("files"));
+                                                            console.log("手动获取 values.name：", form.getValues("name"));
+                                                            field.onChange(files)
+                                                        }}
                                                         maxFiles={4}
                                                         maxSize={4 * 1024 * 1024}
                                                         // disabled={loading}
@@ -192,8 +211,8 @@ export const ToolCard: React.FC<ToolCardProps> = ({ data, mutate }) => {
                                                         // pass the onUpload function here for direct upload
                                                         // onUpload={uploadFiles}
                                                         // disabled={isUploading}
-                                                        items={items}
-                                                        setItems={setItems}
+                                                        // items={items}
+                                                        // setItems={setItems}
                                                     />
                                                 </FormControl>
                                                 <FormMessage />

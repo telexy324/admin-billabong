@@ -105,7 +105,12 @@ export function FileUploader(props: FileUploaderProps) {
         onValueChange,
         // onUpload,
         progresses,
-        accept = { 'image/*': [] },
+        // accept = { 'image/*': [] },
+        accept = {
+            "application/*": [".zip",".doc",".docx",".ppt",".pptx",".xls",".xlsx"],
+            "text/*": [".txt",".csv"],
+            "image/*": []
+        },
         maxSize = 1024 * 1024 * 2,
         maxFiles = 1,
         multiple = false,

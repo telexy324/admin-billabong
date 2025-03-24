@@ -39,23 +39,23 @@ interface ToolCardProps {
     mutate: KeyedMutator<ModelTool[]>
 }
 
-const modelUploadSchema = z.object({
-    created_at: z.string(),
-    id: z.number(),
-    key: z.string(), // 编号
-    name: z.string(), // 文件名
-    size: z.number(),
-    tag: z.string(), // 文件标签
-    updated_at: z.string(),
-    url: z.string().url(), // 确保是 URL 格式
-})
+// const modelUploadSchema = z.object({
+//     created_at: z.string(),
+//     id: z.number(),
+//     key: z.string(), // 编号
+//     name: z.string(), // 文件名
+//     size: z.number(),
+//     tag: z.string(), // 文件标签
+//     updated_at: z.string(),
+//     url: z.string().url(), // 确保是 URL 格式
+// })
 
 const toolFormSchema = z.object({
     name: z.string().min(1),
     summary: z.string().min(1),
     description: z.string(),
     enabled: z.boolean(),
-    files: z.array(modelUploadSchema),
+    files: z.any(),
 })
 
 export const ToolCard: React.FC<ToolCardProps> = ({ data, mutate }) => {
@@ -74,6 +74,9 @@ export const ToolCard: React.FC<ToolCardProps> = ({ data, mutate }) => {
             keepDefaultValues: false,
         },
     })
+
+    // const formData = form.watch();
+    // console.log("当前表单数据:", formData);
 
     const [open, setOpen] = useState(false)
     // const [items, setItems] = useState<ModelUpload[]>(data?data.files:[])
@@ -126,9 +129,7 @@ export const ToolCard: React.FC<ToolCardProps> = ({ data, mutate }) => {
                             <DialogDescription />
                         </DialogHeader>
                         <Form {...form}>
-                            <form onSubmit={(onSubmit) => {
-                                form.handleSubmit(onSubmit)
-                            }} className="space-y-2 my-2">
+                            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 my-2">
                                 <FormField
                                     control={form.control}
                                     name="name"
@@ -194,14 +195,14 @@ export const ToolCard: React.FC<ToolCardProps> = ({ data, mutate }) => {
                                     render={({field}) => (
                                         <div className='space-y-6'>
                                             <FormItem className='w-full'>
-                                                <FormLabel>Files</FormLabel>
+                                                <FormLabel>files</FormLabel>
                                                 <FormControl>
                                                     <FileUploader
                                                         value={field.value}
                                                         onValueChange={(files) => {
-                                                            console.log("上传的文件：", files) // ✅ 调试
-                                                            console.log("手动获取 values.files：", form.getValues("files"));
-                                                            console.log("手动获取 values.name：", form.getValues("name"));
+                                                            // console.log("上传的文件：", files) // ✅ 调试
+                                                            // console.log("手动获取 values.files：", form.getValues("files"));
+                                                            // console.log("手动获取 values.name：", form.getValues("name"));
                                                             field.onChange(files)
                                                         }}
                                                         maxFiles={4}

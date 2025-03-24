@@ -746,6 +746,7 @@ export interface ModelTool {
 export interface ModelToolForm {
     description: string
     enabled?: boolean
+    files: ModelUpload[]
     /** @minLength 1 */
     name: string
     summary: string

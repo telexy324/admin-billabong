@@ -87,6 +87,18 @@ export interface GithubComTelexy324BillabongModelCommonResponseArrayModelToolGro
     success: boolean
 }
 
+export interface GithubComTelexy324BillabongModelCommonResponseArrayModelTopic {
+    data: ModelTopic[]
+    error: string
+    success: boolean
+}
+
+export interface GithubComTelexy324BillabongModelCommonResponseArrayModelTopicGroupResponseItem {
+    data: ModelTopicGroupResponseItem[]
+    error: string
+    success: boolean
+}
+
 export interface GithubComTelexy324BillabongModelCommonResponseArrayModelUpload {
     data: ModelUpload[]
     error: string
@@ -143,6 +155,12 @@ export interface GithubComTelexy324BillabongModelCommonResponseModelSettingRespo
 
 export interface GithubComTelexy324BillabongModelCommonResponseModelTool {
     data: ModelTool
+    error: string
+    success: boolean
+}
+
+export interface GithubComTelexy324BillabongModelCommonResponseModelTopic {
+    data: ModelTopic
     error: string
     success: boolean
 }
@@ -768,6 +786,85 @@ export interface ModelToolGroupForm {
 export interface ModelToolGroupResponseItem {
     group: ModelToolGroup
     tools: number[]
+}
+
+export interface ModelTopic {
+    /** 跟帖数量 */
+    commentCount: number
+    /** 内容 */
+    content: string
+    created_at: string
+    id: number
+    /** 图片 	// 回复可见内容 */
+    imageList: string
+    images: ModelUpload[]
+    /** 最后回复时间 */
+    lastCommentTime: number
+    /** 最后回复用户 	// 扩展数据 */
+    lastCommentUserId: number
+    /** 点赞数量 */
+    likeCount: number
+    /** 是否推荐 */
+    recommend: boolean
+    /** 推荐时间 */
+    recommendTime: number
+    /** 状态：0：正常、1：删除 */
+    status: number
+    /** 置顶 */
+    sticky: boolean
+    /** 置顶时间 */
+    stickyTime: number
+    /** 用户 */
+    title: string
+    updated_at: string
+    /** 查看数量 */
+    viewCount: number
+}
+
+export interface ModelTopicForm {
+    /** 跟帖数量 */
+    commentCount?: number
+    /** 内容 	// 图片 	// 回复可见内容 */
+    content: string
+    images?: ModelUpload[]
+    /** 最后回复时间 */
+    lastCommentTime?: number
+    /** 最后回复用户 	// 扩展数据 */
+    lastCommentUserId?: number
+    /** 点赞数量 */
+    likeCount?: number
+    /** 是否推荐 */
+    recommend?: boolean
+    /** 推荐时间 */
+    recommendTime?: number
+    /** 状态：0：正常、1：删除 */
+    status?: number
+    /** 置顶 */
+    sticky?: boolean
+    /** 置顶时间 */
+    stickyTime?: number
+    /** 标题 */
+    title: string
+    /** 查看数量 */
+    viewCount?: number
+}
+
+export interface ModelTopicGroup {
+    created_at: string
+    id: number
+    name: string
+    updated_at: string
+}
+
+export interface ModelTopicGroupForm {
+    /** @minLength 1 */
+    name: string
+    topics: number[]
+}
+
+export interface ModelTopicGroupResponseItem {
+    group: ModelTopicGroup
+    topics: number[]
 }
 
 export interface ModelUpload {

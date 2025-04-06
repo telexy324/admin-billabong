@@ -86,7 +86,7 @@ export const ToolCard: React.FC<ToolCardProps> = ({ data, mutate }) => {
     // }, [data?data.files:[]]);
 
     const onSubmit = async (values: z.infer<typeof toolFormSchema>) => {
-        console.log("提交的数据：", values);
+        // console.log("提交的数据：", values);
         try {
             data?.id ? await updateTool(data.id, values) : await createTool(values)
         } catch (e) {

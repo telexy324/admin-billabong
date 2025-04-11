@@ -21,6 +21,12 @@ export interface GithubComTelexy324BillabongModelCommonResponseArrayModelAlertRu
     success: boolean
 }
 
+export interface GithubComTelexy324BillabongModelCommonResponseArrayModelComment {
+    data: ModelComment[]
+    error: string
+    success: boolean
+}
+
 export interface GithubComTelexy324BillabongModelCommonResponseArrayModelCron {
     data: ModelCron[]
     error: string
@@ -29,6 +35,12 @@ export interface GithubComTelexy324BillabongModelCommonResponseArrayModelCron {
 
 export interface GithubComTelexy324BillabongModelCommonResponseArrayModelDDNSProfile {
     data: ModelDDNSProfile[]
+    error: string
+    success: boolean
+}
+
+export interface GithubComTelexy324BillabongModelCommonResponseArrayModelFavorite {
+    data: ModelFavorite[]
     error: string
     success: boolean
 }
@@ -119,6 +131,30 @@ export interface GithubComTelexy324BillabongModelCommonResponseArrayString {
 
 export interface GithubComTelexy324BillabongModelCommonResponseArrayUint64 {
     data: number[]
+    error: string
+    success: boolean
+}
+
+export interface GithubComTelexy324BillabongModelCommonResponseBool {
+    data: boolean
+    error: string
+    success: boolean
+}
+
+export interface GithubComTelexy324BillabongModelCommonResponseInt {
+    data: number
+    error: string
+    success: boolean
+}
+
+export interface GithubComTelexy324BillabongModelCommonResponseModelComment {
+    data: ModelComment
+    error: string
+    success: boolean
+}
+
+export interface GithubComTelexy324BillabongModelCommonResponseModelFavorite {
+    data: ModelFavorite
     error: string
     success: boolean
 }
@@ -230,6 +266,53 @@ export interface ModelAlertRuleForm {
     trigger_mode: number
 }
 
+export interface ModelComment {
+    /** 评论数量 */
+    commentCount: number
+    /** 内容 */
+    content: string
+    /** 内容类型：markdown、html */
+    contentType: string
+    created_at: string
+    /** 被评论实体编号 */
+    entityId: number
+    /** 被评论实体类型 */
+    entityType: number
+    id: number
+    /** 图片 */
+    imageList: string
+    images: ModelUpload[]
+    /** 点赞数量 */
+    likeCount: number
+    /** 引用的评论编号 */
+    quoteId: number
+    /** 状态：0：待审核、1：审核通过、2：审核失败、3：已发布 */
+    status: number
+    updated_at: string
+}
+
+export interface ModelCommentForm {
+    /** 评论数量 */
+    commentCount?: number
+    /** 内容 */
+    content?: string
+    /** 内容类型：markdown、html */
+    contentType?: string
+    /** 被评论实体编号 */
+    entityId?: number
+    /** 被评论实体类型 */
+    entityType?: number
+    /** 图片 */
+    imageList?: string
+    images?: ModelUpload[]
+    /** 点赞数量 */
+    likeCount?: number
+    /** 引用的评论编号 */
+    quoteId?: number
+    /** 状态：0：待审核、1：审核通过、2：审核失败、3：已发布 */
+    status?: number
+}
+
 export interface ModelCreateFMResponse {
     session_id: string
 }
@@ -331,6 +414,16 @@ export interface ModelDDNSProfile {
     webhook_url: string
 }
 
+export interface ModelFavorite {
+    created_at: string
+    /** 收藏实体编号 */
+    entityId: number
+    /** 收藏实体类型 */
+    entityType: number
+    id: number
+    updated_at: string
+}
+
 export interface ModelFrontendTemplate {
     author: string
     is_admin: boolean
@@ -344,6 +437,13 @@ export interface ModelFrontendTemplate {
 export interface ModelGeoIP {
     country_code: string
     ip: ModelIP
+}
+
+export interface ModelGetLikeIdsForm {
+    /** 实体编号 */
+    entityIds: number[]
+    /** 实体类型 	// 创建时间 */
+    entityType: number
 }
 
 export interface ModelHost {
@@ -893,10 +993,24 @@ export interface ModelUser {
     username: string
 }
 
+export interface ModelUserFavoriteForm {
+    /** 实体编号 */
+    entityId: number
+    /** 实体类型 	// 创建时间 */
+    entityType: number
+}
+
 export interface ModelUserForm {
     password: string
     role: number
     username: string
+}
+
+export interface ModelUserLikeForm {
+    /** 实体编号 */
+    entityId: number
+    /** 实体类型 	// 创建时间 */
+    entityType: number
 }
 
 export interface ModelWAFApiMock {

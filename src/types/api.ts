@@ -921,6 +921,7 @@ export interface ModelTopic {
     /** 用户 */
     title: string
     updated_at: string
+    userName: string
     /** 查看数量 */
     viewCount: number
 }
@@ -943,6 +944,7 @@ export interface ModelTopicForm {
     sticky?: boolean
     /** 标题 */
     title: string
+    topicGroup?: number
     /** StickyTime        time.Time `json:"stickyTime,omitempty" validate:"optional"`        // 置顶时间 */
     viewCount?: number
 }

@@ -58,8 +58,7 @@ export default function ProfilePage() {
                     >
                         <AvatarImage
                             src={
-                                "https://api.dicebear.com/7.x/notionists/svg?seed=" +
-                                profile.username
+                                "http://localhost:8008/api/v1/uploads/file/avatar1.png"
                             }
                             alt={profile.username}
                         />

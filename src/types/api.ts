@@ -201,6 +201,12 @@ export interface GithubComTelexy324BillabongModelCommonResponseModelTopic {
     success: boolean
 }
 
+export interface GithubComTelexy324BillabongModelCommonResponseModelUserAdditionalInfo {
+    data: ModelUserAdditionalInfo
+    error: string
+    success: boolean
+}
+
 export interface GithubComTelexy324BillabongModelCommonResponseString {
     data: string
     error: string
@@ -902,7 +908,7 @@ export interface ModelTopic {
     favorited: boolean
     id: number
     /** 最后回复时间 */
-    lastCommentTime: SqlNullTime
+    lastCommentTime: string
     /** 最后回复用户 	// 扩展数据 */
     lastCommentUserId: number
     /** 点赞数量 */
@@ -911,13 +917,13 @@ export interface ModelTopic {
     /** 是否推荐 */
     recommend: boolean
     /** 推荐时间 */
-    recommendTime: SqlNullTime
+    recommendTime: string
     /** 状态：0：正常、1：删除 */
     status: number
     /** 置顶 */
     sticky: boolean
     /** 置顶时间 */
-    stickyTime: SqlNullTime
+    stickyTime: string
     /** 用户 */
     title: string
     updated_at: string
@@ -993,6 +999,30 @@ export interface ModelUser {
     username: string
 }
 
+export interface ModelUserAdditionalForm {
+    avatar: string
+    description: string
+}
+
+export interface ModelUserAdditionalInfo {
+    avatar: string
+    /** 跟帖数量 */
+    commentCount: number
+    created_at: string
+    /** 个人描述 */
+    description: string
+    /** 粉丝数量 */
+    fansCount: number
+    /** 关注数量 */
+    followCount: number
+    id: number
+    /** 状态 */
+    status: number
+    /** 帖子数量 */
+    topicCount: number
+    updated_at: string
+}
+
 export interface ModelUserFavoriteForm {
     /** 实体编号 */
     entityId: number
@@ -1019,10 +1049,4 @@ export interface ModelWAFApiMock {
     block_timestamp: number
     count: number
     ip: string
-}
-
-export interface SqlNullTime {
-    time?: string
-    /** Valid is true if Time is not NULL */
-    valid?: boolean
 }
